@@ -51,8 +51,7 @@ void GameController::RunGame()
             mesh->Render(camera->GetProjection() * camera->GetView(), lights, meshCount);
         }
 
-        textController->RenderText(std::to_string(meshCount), 20, 60, 0.5f, {1.0f, 0.5f, 1.0f});
-        textController->RenderText(std::to_string(Time::Instance().FPS()), 1160, 60, 0.5f, { 1.0f, 1.0f, 0.0f });
+        textController->RenderText(std::to_string(Time::Instance().FPS()), 20, 60, 0.5f, {1.0f, 0.5f, 1.0f});
 
         glfwSwapBuffers(window);
         glfwPollEvents();

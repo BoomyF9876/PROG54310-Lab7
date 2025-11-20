@@ -4,9 +4,9 @@
       "Shader": "Color",
       "Model": "../Assets/Models/Sphere.obj",
       "Position": {
-        "x": 0.0,
-        "y": 0.8,
-        "z": 1.0
+        "x": 3.0,
+        "y": 1.0,
+        "z": 0.0
       },
       "Scale": {
         "x": 0.1,
@@ -19,9 +19,38 @@
         "b": 1.0
       },
       "AmbientColor": {
-        "r": 0.1,
-        "g": 0.1,
-        "b": 0.1
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      },
+      "SpecularColor": {
+        "r": 3.0,
+        "g": 3.0,
+        "b": 3.0
+      }
+    },
+    {
+      "Shader": "Color",
+      "Model": "../Assets/Models/Sphere.obj",
+      "Position": {
+        "x": -3.0,
+        "y": 1.0,
+        "z": 0.0
+      },
+      "Scale": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0.1
+      },
+      "LightColor": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "AmbientColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
       },
       "SpecularColor": {
         "r": 3.0,
@@ -40,9 +69,25 @@
         "z": 0.0
       },
       "Scale": {
-        "x": 0.002,
-        "y": 0.002,
-        "z": 0.002
+        "x": 0.003,
+        "y": 0.003,
+        "z": 0.003
+      },
+      "SpecularStrength": 8.0,
+      "RotationRate": -1.0
+    },
+    {
+      "Shader": "Diffuse",
+      "Model": "../Assets/Models/Window.obj",
+      "Position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "Scale": {
+        "x": 3.0,
+        "y": 3.0,
+        "z": 3.0
       },
       "SpecularStrength": 8.0,
       "RotationRate": 1.0
