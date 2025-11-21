@@ -78,7 +78,7 @@
     },
     {
       "Shader": "Diffuse",
-      "Model": "../Assets/Models/Window.obj",
+      "Model": "../Assets/Models/ClearWindow.obj",
       "Position": {
         "x": 0.0,
         "y": 0.0,
