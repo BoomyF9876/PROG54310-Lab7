@@ -8,8 +8,8 @@
   "Camera": {
     "Position": {
       "x": 5.0,
-      "y": 5.0,
-      "z": 5.0
+      "y": 1.0,
+      "z": 0.0
     },
     "LookAt": {
       "x": 0.0,
@@ -18,7 +18,8 @@
     },
     "fov": 45.0,
     "near": 0.1,
-    "far": 1000.0
+    "far": 1000.0,
+    "rotationRate": 10.0
   },
   "Shaders": [
     {
@@ -35,6 +36,11 @@
       "name": "Font",
       "vertex": "Font.vertexshader",
       "fragment": "Font.fragmentshader"
+    },
+    {
+      "name": "Skybox",
+      "vertex": "Skybox.vertexshader",
+      "fragment": "Skybox.fragmentshader"
     }
   ]
 }

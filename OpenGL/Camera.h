@@ -8,25 +8,26 @@
 class Camera
 {
 public:
-	Camera(
-		Resolution _resolution,
-		glm::vec3 _eye = {1, 0, 0}, glm::vec3 _center = { 0, 0, 0 }, glm::vec3 _up = { 0, 1, 0 },
-		float _fov = 45.0f, float _near = 0.1f, float _far = 1000.0f
-	);
-	~Camera() = default;
+	Camera(Resolution& _resolution);
 
+	void Create(Resolution& _resolution, json::JSON& jsonData);
 	void LookAt(const glm::vec3& _position, const glm::vec3& _lookAt, const glm::vec3& _up);
 	void SetProjection(Resolution _resolution);
 
+	void Rotate();
+
 	glm::mat4 GetProjection() { return projection; }
-	glm::mat4 GetView() { return view; }
 	glm::vec3 GetPosition() { return position; }
+	glm::mat4 GetView() { return view; }
 private:
-	float fov, near_plane, far_plane;
-	glm::vec3 eye, center, up;
 	glm::mat4 projection;
-	glm::mat4 view = {};
 	glm::vec3 position = {};
+	glm::mat4 view = {};
+
+	glm::vec3 lookAt = {};
+	glm::vec3 rotation = {};
+	float angle = 0.0f;
+	float rotationRate = 0.0f;
 };
 
 #endif

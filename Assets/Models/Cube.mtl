@@ -1,12 +1,12 @@
-# Blender 4.5.4 LTS MTL File: 'None'
+# Blender 4.2.1 LTS MTL File: 'Exercise #2.blend'
 # www.blender.org
 
-newmtl Material.001
+newmtl 01___Default
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd E:/Project/Sheridan/Sheridan_ComputerGraphic/OpenGL/Assets/Textures/MetalFrameWood.jpg
-map_Ks E:/Project/Sheridan/Sheridan_ComputerGraphic/OpenGL/Assets/Textures/MetalFrame.jpg
+map_Kd D:/Workspace-Sheridan/Courses/PROG31068/Source Code/Exercise-2/Assets/Textures/MetalFrameWood.jpg
+map_Ks D:/Workspace-Sheridan/Courses/PROG31068/Source Code/Exercise-2/Assets/Textures/MetalFrameSpecular.jpg

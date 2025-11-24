@@ -1,0 +1,13 @@
+#version 330
+
+in vec3 vertices;
+
+out vec3 retTexCoords;
+
+uniform mat4 PV;
+
+void main()
+{
+	retTexCoords = vertices;
+	gl_Position = PV * vec4(vertices, 1.0);
+}

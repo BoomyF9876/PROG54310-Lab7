@@ -60,6 +60,9 @@
     <ClCompile Include="TextController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Diffuse.fragmentshader">
@@ -84,6 +87,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="PointLightShader.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Skybox.vertexshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Skybox.fragmentshader">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -128,6 +137,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

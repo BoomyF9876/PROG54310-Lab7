@@ -10,6 +10,8 @@
 #include "Camera.h"
 #include "TextController.h"
 
+class Skybox;
+
 class GameController
 {
 public:
@@ -41,6 +43,7 @@ private:
 	std::map<std::string, Shader*> shaders;
 	std::map<std::string, Font*> fonts;
 
+	Skybox* skybox = nullptr;
 	std::list<Mesh*> meshes;
 	std::list<Mesh*> lights;
 

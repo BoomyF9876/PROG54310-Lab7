@@ -2,6 +2,7 @@
 #include "WindowController.h"
 #include "ToolWindow.h"
 #include "EngineTime.h"
+#include "Skybox.h"
 
 void GameController::Initialize()
 {
@@ -12,6 +13,9 @@ void GameController::Initialize()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_CULL_FACE);
+    /*glCullFace(GL_BACK);
+    glFrontFace(GL_CW);*/
     srand(time(0));
 
     glGenVertexArrays(1, &vao);
@@ -30,6 +34,13 @@ void GameController::RunGame()
         Time::Instance().Update();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        if (skybox != nullptr)
+        {
+            camera->Rotate();
+            glm::mat4 view = glm::mat4(glm::mat3(camera->GetView()));
+            skybox->Render(camera->GetProjection() * view);
+        }
 
         if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && meshCount < 1000)
         {
@@ -86,6 +97,11 @@ void GameController::RunGame()
         delete textController;
     }
 
+    if (skybox != nullptr)
+    {
+        delete skybox;
+    }
+
     delete camera;
 }
 
@@ -106,35 +122,12 @@ void GameController::Load()
     glClearColor(ClearColor.r, ClearColor.g, ClearColor.b, 0.0f);
 #pragma endregion
 
-#pragma region Camera
-    float _fov, _near, _far;
-    glm::vec3 CameraPosition{ 1, 0, 0 };
-    glm::vec3 CameraLookAt{ 0, 0, 0 };
-    
-    json::JSON& jsonCamera = Get(document, "Camera");
-    json::JSON& jsonCameraPos = Get(jsonCamera, "Position");
-    CameraPosition.x = Get(jsonCameraPos, "x").ToFloat();
-    CameraPosition.y = Get(jsonCameraPos, "y").ToFloat();
-    CameraPosition.z = Get(jsonCameraPos, "z").ToFloat();
-
-    json::JSON& jsonCameraLookAt = Get(jsonCamera, "LookAt");
-    CameraLookAt.x = Get(jsonCameraLookAt, "x").ToFloat();
-    CameraLookAt.y = Get(jsonCameraLookAt, "y").ToFloat();
-    CameraLookAt.z = Get(jsonCameraLookAt, "z").ToFloat();
-
-    _fov = Get(jsonCamera, "fov").ToFloat();
-    _near = Get(jsonCamera, "near").ToFloat();
-    _far = Get(jsonCamera, "far").ToFloat();
-    
-    if (!_fov) _fov = 45.0f;
-    if (!_near) _near = 0.1f;
-    if (!_far) _far = 1000.0f;
-    
-    camera = new Camera(
-        WindowController::GetInstance().GetResolution(),
-        CameraPosition, CameraLookAt, { 0, 1, 0 },
-        _fov, _near, _far
-    );
+#pragma region Camera    
+    camera = new Camera(WindowController::GetInstance().GetResolution());
+    if (document.hasKey("Camera"))
+    {
+        camera->Create(WindowController::GetInstance().GetResolution(), document["Camera"]);
+    }    
 #pragma endregion
 
 #pragma region Shader
@@ -174,6 +167,15 @@ void GameController::Load()
         meshes.push_back(mesh);
     }
 #pragma endregion
+
+#pragma region Skyboxes
+    if (document.hasKey("Skybox"))
+    {
+        skybox = new Skybox();
+        skybox->Create(document["Skybox"]);
+    }
+#pragma endregion 
+
 
 #pragma region Fonts
     if (document.hasKey("Fonts"))
