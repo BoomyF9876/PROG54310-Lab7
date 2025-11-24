@@ -52,7 +52,7 @@ void Skybox::Create(json::JSON& jsonData)
 
 void Skybox::SetShaderVariables(glm::mat4 _pv)
 {
-    shader->SetMat4("pv", _pv);
+    shader->SetMat4("PV", _pv);
     shader->SetTextureSampler("skyboxTexture", GL_TEXTURE_CUBE_MAP, 0, texture->GetTexture());
 }
 
