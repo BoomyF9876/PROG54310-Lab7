@@ -1,0 +1,12 @@
+#version 330
+
+in vec2 vertices;
+in vec2 texCoords;
+
+out vec2 retTexCoords;
+
+void main()
+{
+	gl_Position = vec4(vertices.x, vertices.y, 0.0f, 1.0f);
+	retTexCoords = texCoords;
+}

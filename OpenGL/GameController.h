@@ -11,6 +11,7 @@
 #include "TextController.h"
 
 class Skybox;
+class PostProcessor;
 
 class GameController
 {
@@ -43,6 +44,7 @@ private:
 	std::map<std::string, Shader*> shaders;
 	std::map<std::string, Font*> fonts;
 
+	PostProcessor* postProcessor = nullptr;
 	Skybox* skybox = nullptr;
 	std::list<Mesh*> meshes;
 	std::list<Mesh*> lights;

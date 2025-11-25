@@ -72,5 +72,8 @@
       "../Assets/Textures/Skybox/front.jpg",
       "../Assets/Textures/Skybox/back.jpg"
     ]
+  },
+  "PostProcessor": {
+    "Shader":  "DefaultPostProcessor"
   }
 }

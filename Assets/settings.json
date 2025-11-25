@@ -41,6 +41,11 @@
       "name": "Skybox",
       "vertex": "Skybox.vertexshader",
       "fragment": "Skybox.fragmentshader"
+    },
+    {
+      "name": "DefaultPostProcessor",
+      "vertex": "PostProcessor.vertexshader",
+      "fragment": "PostProcessor.fragmentshader"
     }
   ]
 }

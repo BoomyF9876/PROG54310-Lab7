@@ -3,6 +3,7 @@
 #include "ToolWindow.h"
 #include "EngineTime.h"
 #include "Skybox.h"
+#include "PostProcessor.h"
 
 void GameController::Initialize()
 {
@@ -35,6 +36,8 @@ void GameController::RunGame()
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        if (postProcessor != nullptr) postProcessor->Start();
+
         if (skybox != nullptr)
         {
             camera->Rotate();
@@ -61,6 +64,8 @@ void GameController::RunGame()
             mesh->SetRotation(mesh->GetRotation() + Time::Instance().DeltaTime() * glm::vec3(0.0f, mesh->GetRotationRate(), 0.0f));
             mesh->Render(camera->GetProjection() * camera->GetView(), lights, meshCount);
         }
+
+        if (postProcessor != nullptr) postProcessor->End();
 
         textController->RenderText(std::to_string(Time::Instance().FPS()), 20, 60, 0.5f, {1.0f, 0.5f, 1.0f});
 
@@ -100,6 +105,11 @@ void GameController::RunGame()
     if (skybox != nullptr)
     {
         delete skybox;
+    }
+
+    if (postProcessor != nullptr)
+    {
+        delete postProcessor;
     }
 
     delete camera;
@@ -203,4 +213,11 @@ void GameController::Load()
     }
 #pragma endregion
 
+#pragma region Post Processing
+    if (document.hasKey("PostProcessor"))
+    {
+        postProcessor = new PostProcessor();
+        postProcessor->Create(document["PostProcessor"]);
+    }
+#pragma endregion
 }
