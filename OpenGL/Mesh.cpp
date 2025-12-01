@@ -42,45 +42,6 @@ void Mesh::Create(json::JSON& jsonData)
     if (jsonData.hasKey("SpotLightconeAngle")) spotLightconeAngle = Get(jsonData, "SpotLightconeAngle").ToFloat();
     if (jsonData.hasKey("SpotLightfalloff")) spotLightfalloff = Get(jsonData, "SpotLightfalloff").ToFloat();
 
-    /*vertexData = {
-        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-        -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
-    };*/
-
     M_ASSERT(jsonData.hasKey("Model"), "Model file is required");
     LoadOBJ(jsonData["Model"].ToString());
 
@@ -108,6 +69,20 @@ void Mesh::Create(json::JSON& jsonData)
 
     if (enableInstancing)
     {
+        int instanceXRange = 400;
+        int instanceYRange = 200;
+        int instanceZRange = 200;
+
+        if (jsonData.hasKey("InstanceXRange")) instanceXRange = jsonData["InstanceXRange"].ToInt();
+        if (jsonData.hasKey("InstanceYRange"))
+            instanceYRange = jsonData["InstanceYRange"].ToInt();
+        if (jsonData.hasKey("InstanceZRange"))
+            instanceZRange = jsonData["InstanceZRange"].ToInt();
+
+        int instanceHalfXRange = (int)((float)instanceXRange * -0.5f);
+        int instanceHalfYRange = (int)((float)instanceYRange * -0.5f);
+        int instanceHalfZRange = (int)((float)instanceZRange * -0.5f);
+
         glGenBuffers(1, &instanceBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 
@@ -117,7 +92,14 @@ void Mesh::Create(json::JSON& jsonData)
         for (unsigned int i = 0; i < instanceCount; i++)
         {
             *instanceMat = glm::mat4(1.0f);
-            *instanceMat = glm::translate(*instanceMat, glm::vec3(-20 + rand() % 40, -10 + rand() % 20, -10 + rand() % 20));
+            *instanceMat = glm::translate(
+                *instanceMat,
+                glm::vec3(
+                    instanceHalfXRange + rand() % instanceXRange,
+                    instanceHalfYRange + rand() % instanceYRange,
+                    instanceHalfZRange + rand() % instanceZRange
+                )
+            );
 
             instanceMat++;
         }

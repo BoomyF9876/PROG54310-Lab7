@@ -26,6 +26,7 @@ private:
 	// Members
 	GLuint framebuffer = 0;
 	GLuint textureColorbuffer = 0;
+	GLuint textureDepthBuffer = 0;
 	GLuint renderBufferObject = 0;
 	GLuint vertexBuffer = 0;
 	Shader* shader = nullptr;

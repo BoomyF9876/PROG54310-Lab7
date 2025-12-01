@@ -8,8 +8,8 @@
   "Camera": {
     "Position": {
       "x": 5.0,
-      "y": 1.0,
-      "z": 0.0
+      "y": 2.0,
+      "z": 5.0
     },
     "LookAt": {
       "x": 0.0,
@@ -19,7 +19,7 @@
     "fov": 45.0,
     "near": 0.1,
     "far": 1000.0,
-    "rotationRate": 10.0
+    "rotationRate": 0.0
   },
   "Shaders": [
     {

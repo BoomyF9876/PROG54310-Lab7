@@ -39,6 +39,37 @@ void PostProcessor::CreateBuffers()
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, r.width, r.height); // use a single renderbuffer object for both a depth AND stencil buffer
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBufferObject); // now actually attach it
 
+    glGenTextures(1, &textureDepthBuffer);
+    glBindTexture(GL_TEXTURE_2D, textureDepthBuffer);
+    glTexImage2D(
+        GL_TEXTURE_2D,           // Target
+        0,                       // Mipmap level
+        GL_DEPTH_COMPONENT,      // Internal format
+        r.width,            // Width
+        r.height,           // Height
+        0,                       // Border (must be 0)
+        GL_DEPTH_COMPONENT,      // Format
+        GL_FLOAT,                // Data type
+        NULL                     // No initial data
+    );
+
+    // Set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // Set texture wrapping parameters to clamp to edge
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    // Attach depth texture to framebuffer
+    glFramebufferTexture2D(
+        GL_FRAMEBUFFER,          // Target
+        GL_DEPTH_ATTACHMENT,     // Attachment point
+        GL_TEXTURE_2D,           // Texture target
+        textureDepthBuffer,      // Texture handle
+        0                        // Mipmap level
+    );
+
     // Now that we created the framebuffer and added all attachments we want to check if it is complete
     M_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is not complete!");
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -98,6 +129,8 @@ void PostProcessor::End()
 
     glUseProgram(shader->GetProgramID()); // Use our shader
     shader->SetTextureSampler("screenTexture", GL_TEXTURE0, 0, textureColorbuffer);
+    shader->SetTextureSampler("depthSampler", GL_TEXTURE1, 1, textureDepthBuffer);
+    
     BindVertices();
     /*glLineWidth(5.0f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/
