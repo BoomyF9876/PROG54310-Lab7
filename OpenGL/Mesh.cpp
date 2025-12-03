@@ -53,16 +53,15 @@ void Mesh::Create(json::JSON& jsonData)
     else
     {
         LoadOBJ(filename);
+        diffuseTexture = new Texture();
+        if (diffuseMap.size() > 0) diffuseTexture->LoadTexture(diffuseMap.c_str());
+
+        specularTexture = new Texture();
+        if (specularMap.size() > 0) specularTexture->LoadTexture(specularMap.c_str());
+
+        normalTexture = new Texture();
+        if (normalMap.size() > 0) normalTexture->LoadTexture(normalMap.c_str());
     }
-
-    diffuseTexture = new Texture();
-    if (diffuseMap.size() > 0) diffuseTexture->LoadTexture(diffuseMap.c_str());
-
-    specularTexture = new Texture();
-    if (specularMap.size() > 0) specularTexture->LoadTexture(specularMap.c_str());
-
-    normalTexture = new Texture();
-    if (normalMap.size() > 0) normalTexture->LoadTexture(normalMap.c_str());
 
     if (enableNormalMaps)
     {
