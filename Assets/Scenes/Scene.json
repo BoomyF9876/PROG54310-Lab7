@@ -4,7 +4,7 @@
       "Shader": "Color",
       "Model": "../Assets/Models/Sphere.obj",
       "Position": {
-        "x": 0.0,
+        "x": 3.0,
         "y": 0.0,
         "z": 0.0
       },
@@ -19,9 +19,9 @@
         "b": 1.0
       },
       "AmbientColor": {
-        "r": 0.1,
-        "g": 0.1,
-        "b": 0.1
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
       },
       "SpecularColor": {
         "r": 3.0,
@@ -33,23 +33,23 @@
   "Meshes": [
     {
       "Shader": "Diffuse",
-      "Model": "../Assets/Models/Cube.obj",
+      "Model": "../Assets/Models/Fighter.ase",
       "Position": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
       "Scale": {
-        "x": 0.1,
-        "y": 0.1,
-        "z": 0.1
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
       },
       "SpecularStrength": 8.0,
-      "RotationRate": 0.2,
-      "InstanceCount": 1000,
-      "InstanceXRange": 500,
-      "InstanceYRange": 500,
-      "InstanceZRange": 500
+      "RotationRate": 1.0,
+      "InstanceCount": 0.0,
+      "InstanceXRange": 0.0,
+      "InstanceYRange": 0.0,
+      "InstanceZRange": 0.0
     }
   ],
   "Fonts": [
@@ -64,20 +64,21 @@
   ],
   "TextController": {
     "Font": "Arial"
-  },
-  "Skybox": {
-    "Shader": "Skybox",
-    "Model": "../Assets/Models/SkyBox.obj",
-    "Faces": [
-      "../Assets/Textures/Skybox/right.jpg",
-      "../Assets/Textures/Skybox/left.jpg",
-      "../Assets/Textures/Skybox/top.jpg",
-      "../Assets/Textures/Skybox/bottom.jpg",
-      "../Assets/Textures/Skybox/front.jpg",
-      "../Assets/Textures/Skybox/back.jpg"
-    ]
-  },
-  "PostProcessor": {
-    "Shader":  "DefaultPostProcessor"
   }
 }
+
+  //"Skybox": {
+  //  "Shader": "Skybox",
+  //  "Model": "../Assets/Models/SkyBox.obj",
+  //  "Faces": [
+  //    "../Assets/Textures/Skybox/right.png",
+  //    "../Assets/Textures/Skybox/left.png",
+  //    "../Assets/Textures/Skybox/top.png",
+  //    "../Assets/Textures/Skybox/bottom.png",
+  //    "../Assets/Textures/Skybox/front.png",
+  //    "../Assets/Textures/Skybox/back.png"
+  //  ]
+  //},
+  //"PostProcessor": {
+  //  "Shader": "DefaultPostProcessor"
+  //}

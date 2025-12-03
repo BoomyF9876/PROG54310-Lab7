@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "GameController.h"
+#include "Asemesh.h"
 #include <OBJ_Loader.h>
 
 Mesh::~Mesh()
@@ -9,6 +10,7 @@ Mesh::~Mesh()
 
     delete diffuseTexture;
     delete specularTexture;
+    delete normalTexture;
 
     if (instanceData != nullptr)
     {
@@ -43,7 +45,15 @@ void Mesh::Create(json::JSON& jsonData)
     if (jsonData.hasKey("SpotLightfalloff")) spotLightfalloff = Get(jsonData, "SpotLightfalloff").ToFloat();
 
     M_ASSERT(jsonData.hasKey("Model"), "Model file is required");
-    LoadOBJ(jsonData["Model"].ToString());
+    std::string filename = jsonData["Model"].ToString();
+    if (EndsWith(filename, "ase"))
+    {
+        LoadASE(filename);
+    }
+    else
+    {
+        LoadOBJ(filename);
+    }
 
     diffuseTexture = new Texture();
     if (diffuseMap.size() > 0) diffuseTexture->LoadTexture(diffuseMap.c_str());
@@ -396,4 +406,98 @@ std::string Mesh::RemoveFolder(std::string& _map)
     }
 
     return _map;
+}
+
+void Mesh::LoadASE(std::string& _file)
+{
+    ASEReader reader;
+    reader.ParseASEFile(_file.c_str());
+    ASEReader::MeshInfo& m = reader.GeoObjects[0]->MeshI;
+    ASEReader::Material* mat = reader.Materials[reader.GeoObjects[0]->MaterialID];
+
+    std::vector<objl::Vector3> tangents;
+    std::vector<objl::Vector3> bitangents;
+    std::vector<objl::Vertex> triangle;
+    objl::Vector3 tangent;
+    objl::Vector3 bitangent;
+    int vCount = 0;
+    for (int count = 0; count < m.NumFaces; count++)
+    {
+        glm::vec3 tF = m.TexFaces[count];
+        glm::vec3 f = m.Faces[count];
+        triangle.clear();
+
+        objl::Vertex vert = objl::Vertex();
+        vert.Position = objl::Vector3(m.Vertices[(int)f.x].x, m.Vertices[(int)f.x].y, m.Vertices[(int)f.x].z);
+        vert.Normal = objl::Vector3(m.VertexNormals[vCount].x, m.VertexNormals[vCount].y, m.VertexNormals[vCount].z);
+        vert.TextureCoordinate = objl::Vector2(m.TexVertices[(int)tF.x].x, m.TexVertices[(int)tF.x].y);
+        triangle.push_back(vert);
+
+        vCount++;
+
+        vert = objl::Vertex();
+        vert.Position = objl::Vector3(m.Vertices[(int)f.y].x, m.Vertices[(int)f.y].y, m.Vertices[(int)f.y].z);
+        vert.Normal = objl::Vector3(m.VertexNormals[vCount].x, m.VertexNormals[vCount].y, m.VertexNormals[vCount].z);
+        vert.TextureCoordinate = objl::Vector2(m.TexVertices[(int)tF.y].x, m.TexVertices[(int)tF.y].y);
+        triangle.push_back(vert);
+        vCount++;
+
+        vert = objl::Vertex();
+        vert.Position = objl::Vector3(m.Vertices[(int)f.z].x, m.Vertices[(int)f.z].y, m.Vertices[(int)f.z].z);
+        vert.Normal = objl::Vector3(m.VertexNormals[vCount].x, m.VertexNormals[vCount].y, m.VertexNormals[vCount].z);
+        vert.TextureCoordinate = objl::Vector2(m.TexVertices[(int)tF.z].x, m.TexVertices[(int)tF.z].y);
+        triangle.push_back(vert);
+        vCount++;
+
+        CalculateTangents(triangle, tangent, bitangent);
+        tangents.push_back(tangent);
+        bitangents.push_back(bitangent);
+        
+        for (int c = 0; c < 3; c++)
+        {
+            vertexData.push_back(triangle[c].Position.X);
+            vertexData.push_back(triangle[c].Position.Y);
+            vertexData.push_back(triangle[c].Position.Z);
+            vertexData.push_back(triangle[c].Normal.X);
+            vertexData.push_back(triangle[c].Normal.Y);
+            vertexData.push_back(triangle[c].Normal.Z);
+            vertexData.push_back(triangle[c].TextureCoordinate.X);
+            vertexData.push_back(triangle[c].TextureCoordinate.Y);
+
+            int index = (vCount / 3) - 1;
+            vertexData.push_back(tangents[index].X);
+            vertexData.push_back(tangents[index].Y);
+            vertexData.push_back(tangents[index].Z);
+            vertexData.push_back(bitangents[index].X);
+            vertexData.push_back(bitangents[index].Y);
+            vertexData.push_back(bitangents[index].Z);
+        }
+    }
+
+    diffuseTexture = new Texture();
+    if (mat->Maps[0].Name == "DIFFUSE")
+    {
+        diffuseTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[0].TextureFileName));
+    }
+    specularTexture = new Texture();
+    if (mat->Maps[1].Name == "SPECULAR")
+    {
+        specularTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName));
+    }
+    normalTexture = new Texture();
+    if (mat->Maps[1].Name == "BUMP")
+    {
+        normalTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName));
+        enableNormalMaps = true;
+    }
+    else if (mat->Maps[2].Name == "BUMP")
+    {
+        normalTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[2].TextureFileName));
+        enableNormalMaps = true;
+    }
+}
+
+bool Mesh::EndsWith(const std::string& _str, const std::string& _suffix)
+{
+    return _str.size() >= _suffix.size() && 0 == _str.compare(_str.size() - _suffix.size(), _suffix.size(), _suffix);
 }

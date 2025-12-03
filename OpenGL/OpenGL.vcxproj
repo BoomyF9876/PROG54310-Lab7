@@ -146,6 +146,7 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Asemesh.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -184,6 +185,7 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asemesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="Font.h" />

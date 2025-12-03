@@ -10,6 +10,8 @@
 #include <cmath>
 #include <list>
 #include <map>
+#include <algorithm>
+#include <sstream>
 
 #define ERROR_INFO 0
 #ifdef _WIN32

@@ -19,7 +19,8 @@
     "fov": 45.0,
     "near": 0.1,
     "far": 1000.0,
-    "rotationRate": 0.0
+    "rotationRate": 0.0,
+    "speed": 5.0
   },
   "Shaders": [
     {

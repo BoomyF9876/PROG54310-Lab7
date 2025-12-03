@@ -89,11 +89,14 @@ private:
 	glm::vec2 texTranslation = glm::vec2(0.0);
 
 	void LoadOBJ(const std::string& _file);
+	void LoadASE(std::string& _file);
+	
 	void SetShaderVariables(glm::mat4 _pv, const std::list<Mesh*>& _lights);
 	void BindAttributes();
 	std::string Concat(const std::string& _s1, int _index, const std::string& _s2);
 	std::string RemoveFolder(std::string& _map);
 	void CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3& _tangent, objl::Vector3& _bitangent);
+	bool EndsWith(const std::string& _str, const std::string& _suffix);
 
 	void LoadVec3(json::JSON& jsonData, const char* name, glm::vec3& vec);
 };
