@@ -159,7 +159,6 @@ void Mesh::BindAttributes()
         (void*)(6 * sizeof(float))
     );
 
-    glVertexAttrib2fv(shader->GetAttrTexTranslation(), glm::value_ptr(texTranslation));
 
 #pragma region Bind Instancing Data
     if (enableInstancing)
@@ -302,7 +301,6 @@ void Mesh::Render(glm::mat4 _wvp, const std::list<Mesh*>& _lights, int count)
     glDisableVertexAttribArray(shader->GetAttrVertices());
     glDisableVertexAttribArray(shader->GetAttrNormals());
     glDisableVertexAttribArray(shader->GetAttrTexCoords());
-    glDisableVertexAttribArray(shader->GetAttrTexTranslation());
     if (enableInstancing)
     {
         glDisableVertexAttribArray(shader->GetAttrInstanceMatrix());

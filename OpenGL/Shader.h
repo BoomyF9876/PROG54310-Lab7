@@ -15,7 +15,6 @@ class Shader
 	GLuint attrTangents = 0;
 	GLuint attrBitangents = 0;
 	GLuint attrTexCoords = 0;
-	GLuint attrTexTranslation = 0;
 	GLuint attrTexSampler1 = 0;
 	GLuint attrTexSampler2 = 0;
 	GLuint attrInstanceMatrix = 0;
@@ -36,7 +35,6 @@ public:
 	GLuint GetAttrInstanceMatrix() { return attrInstanceMatrix; }
 
 	void LoadShaders(const char* _vertexFilePath, const char* _fragmentFilePath);
-	GLuint GetAttrTexTranslation() { return attrTexTranslation; }
 	GLuint GetTexSampler1() { return attrTexSampler1; }
 	GLuint GetTexSampler2() { return attrTexSampler2; }
 

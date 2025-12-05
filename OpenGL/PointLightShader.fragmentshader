@@ -4,7 +4,6 @@ in vec3 retFragPos;
 in vec3 retNormal;
 in vec2 retTexCoord;
 in vec3 retViewDirection;
-in vec2 retTexTranslation;
 in mat4 retWorld;
 in mat3 retTBN;
 
