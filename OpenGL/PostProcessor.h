@@ -11,11 +11,18 @@ class PostProcessor
 public:
 	~PostProcessor();
 
+	std::string effect = "";
+
 	// Methods
 	void Create(json::JSON& jsonData);
 	void Start();
 	void End();
 
+	void SetShader(std::string _name, Shader* _shader)
+	{
+		shader = _shader;
+		effect = _name;
+	}
 private:
 	// Methods
 	void CreateVertices();

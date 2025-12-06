@@ -44,9 +44,26 @@
       "fragment": "Skybox.fragmentshader"
     },
     {
-      "name": "DefaultPostProcessor",
+      "name": "Default",
       "vertex": "PostProcessor.vertexshader",
       "fragment": "PostProcessor.fragmentshader"
+    }
+  ],
+  "EffectShaders": [
+    {
+      "name": "Blur",
+      "vertex": "PostProcessor.vertexshader",
+      "fragment": "Blur.fragmentshader"
+    },
+    {
+      "name": "GrayScale",
+      "vertex": "PostProcessor.vertexshader",
+      "fragment": "GrayScale.fragmentshader"
+    },
+    {
+      "name": "Sharpen",
+      "vertex": "PostProcessor.vertexshader",
+      "fragment": "Sharpen.fragmentshader"
     }
   ]
 }

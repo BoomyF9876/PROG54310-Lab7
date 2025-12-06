@@ -78,7 +78,6 @@
     ]
   },
   "PostProcessor": {
-    "Shader": "DefaultPostProcessor"
+    "Shader": "Default"
   }
 }
-

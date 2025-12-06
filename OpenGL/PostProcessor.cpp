@@ -14,6 +14,7 @@ void PostProcessor::Create(json::JSON& jsonData)
 {
     M_ASSERT(jsonData.hasKey("Shader"), "Shader is required");
     shader = GameController::GetInstance().GetShader(jsonData["Shader"].ToString().c_str());
+    effect = jsonData["Shader"].ToString();
     CreateBuffers();
     CreateVertices();
 }

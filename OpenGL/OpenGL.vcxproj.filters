@@ -107,6 +107,15 @@
     <None Include="Postprocessor.fragmentshader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Blur.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="GrayScale.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Sharpen.fragmentshader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ToolWindow.h">

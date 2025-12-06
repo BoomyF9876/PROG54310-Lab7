@@ -33,6 +33,10 @@ public:
 		return itr->second;
 	}
 
+	std::map<std::string, Shader*>::iterator& GetIt() { return it; }
+	PostProcessor* GetProcessor() { return postProcessor; }
+	std::map<std::string, Shader*>& GetEffectShaders() { return effectShaders; }
+
 	Font* GetFont(const char* fontName)
 	{
 		auto itr = fonts.find(fontName);
@@ -42,6 +46,8 @@ public:
 
 private:
 	std::map<std::string, Shader*> shaders;
+	std::map<std::string, Shader*> effectShaders;
+	std::map<std::string, Shader*>::iterator it;
 	std::map<std::string, Font*> fonts;
 
 	PostProcessor* postProcessor = nullptr;

@@ -5,6 +5,31 @@
 #include "Skybox.h"
 #include "PostProcessor.h"
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    GameController* gc = static_cast<GameController*>(glfwGetWindowUserPointer(window));
+    
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    {
+        if (gc->GetIt() == gc->GetEffectShaders().begin())
+        {
+            gc->GetIt() = --gc->GetEffectShaders().end();
+        }
+        else
+        {
+            gc->GetIt()--;
+        }
+        gc->GetProcessor()->SetShader(gc->GetIt()->first, gc->GetIt()->second);
+    }
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    {
+        if (++gc->GetIt() == gc->GetEffectShaders().end())
+        {
+            gc->GetIt() = gc->GetEffectShaders().begin();
+        }
+        gc->GetProcessor()->SetShader(gc->GetIt()->first, gc->GetIt()->second);
+    }
+}
+
 void GameController::Initialize()
 {
     GLFWwindow* window = WindowController::GetInstance().GetWindow();
@@ -31,6 +56,10 @@ void GameController::RunGame()
     
     Time::Instance().Initialize();
 
+    it = effectShaders.begin();
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetWindowUserPointer(window, this);
+
     do {
         Time::Instance().Update();
 
@@ -43,15 +72,6 @@ void GameController::RunGame()
             camera->Rotate();
             glm::mat4 view = glm::mat4(glm::mat3(camera->GetView()));
             skybox->Render(camera->GetProjection() * view);
-        }
-
-        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && meshCount < 1000)
-        {
-            meshCount++;
-        }
-        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && meshCount > 1)
-        {
-            meshCount--;
         }
         
         for (auto& light: lights)
@@ -67,7 +87,7 @@ void GameController::RunGame()
 
         if (postProcessor != nullptr) postProcessor->End();
 
-        textController->RenderText(std::to_string(Time::Instance().FPS()), 20, 60, 0.5f, {1.0f, 0.5f, 1.0f});
+        textController->RenderText(postProcessor->effect, 20, 60, 0.5f, {1.0f, 0.5f, 1.0f});
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -118,9 +138,8 @@ void GameController::RunGame()
 void GameController::Load()
 {
 #pragma region Settings
-    std::ifstream inputStream("../Assets/settings.json");
-    std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
-    json::JSON document = json::JSON::Load(str);
+    const std::string str = "../Assets/settings.json";
+    json::JSON document = LoadJson(str);
 #pragma endregion
 
 #pragma region Clear Color
@@ -150,6 +169,19 @@ void GameController::Load()
         Shader* shaderColor = new Shader();
         shaderColor->LoadShaders(shaderJSON["vertex"].ToString().c_str(), shaderJSON["fragment"].ToString().c_str());
         shaders.emplace(shaderJSON["name"].ToString().c_str(), shaderColor);
+    }
+#pragma endregion
+
+#pragma region Effect Shader
+    json::JSON& effectShadersJSON = Get(document, "EffectShaders");
+    for (auto& shaderJSON : effectShadersJSON.ArrayRange())
+    {
+        assert(shaderJSON.hasKey("name"));
+        assert(shaderJSON.hasKey("vertex"));
+        assert(shaderJSON.hasKey("fragment"));
+        Shader* effectShaderColor = new Shader();
+        effectShaderColor->LoadShaders(shaderJSON["vertex"].ToString().c_str(), shaderJSON["fragment"].ToString().c_str());
+        effectShaders.emplace(shaderJSON["name"].ToString().c_str(), effectShaderColor);
     }
 #pragma endregion
 
