@@ -53,15 +53,15 @@ void Mesh::Create(json::JSON& jsonData)
     else
     {
         LoadOBJ(filename);
-        diffuseTexture = new Texture();
-        if (diffuseMap.size() > 0) diffuseTexture->LoadTexture(diffuseMap.c_str());
-
-        specularTexture = new Texture();
-        if (specularMap.size() > 0) specularTexture->LoadTexture(specularMap.c_str());
-
-        normalTexture = new Texture();
-        if (normalMap.size() > 0) normalTexture->LoadTexture(normalMap.c_str());
     }
+    diffuseTexture = new Texture();
+    if (diffuseMap.size() > 0) diffuseTexture->LoadTexture(diffuseMap.c_str());
+
+    specularTexture = new Texture();
+    if (specularMap.size() > 0) specularTexture->LoadTexture(specularMap.c_str());
+
+    normalTexture = new Texture();
+    if (normalMap.size() > 0) normalTexture->LoadTexture(normalMap.c_str());
 
     if (enableNormalMaps)
     {
@@ -471,26 +471,23 @@ void Mesh::LoadASE(std::string& _file)
         }
     }
 
-    diffuseTexture = new Texture();
     if (mat->Maps[0].Name == "DIFFUSE")
     {
-        diffuseTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[0].TextureFileName));
+        diffuseMap = "../Assets/Textures/" + RemoveFolder(mat->Maps[0].TextureFileName);
     }
-    specularTexture = new Texture();
     if (mat->Maps[1].Name == "SPECULAR")
     {
-        specularTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName));
+        specularMap = "../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName);
     }
-    normalTexture = new Texture();
     if (mat->Maps[1].Name == "BUMP")
     {
-        normalTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName));
         enableNormalMaps = true;
+        normalMap = "../Assets/Textures/" + RemoveFolder(mat->Maps[1].TextureFileName);
     }
     else if (mat->Maps[2].Name == "BUMP")
     {
-        normalTexture->LoadTexture("../Assets/Textures/" + RemoveFolder(mat->Maps[2].TextureFileName));
         enableNormalMaps = true;
+        normalMap = "../Assets/Textures/" + RemoveFolder(mat->Maps[2].TextureFileName);
     }
 }
 
